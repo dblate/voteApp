@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>New Eden Faces</title>
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900"/>
+  <link rel="stylesheet" href="/css/main.css"/> -->
+  <script src="./build/react.js"></script>
+  <script src="./build/react-dom.js"></script>
+  <script src="./build/browser.min.js"></script>
+</head>
+<body>
+<div id="app">{{ html|safe }}</div>
+<div id="menus"></div>
+<!-- <script src="/js/vendor.js"></script>
+<script src="/js/vendor.bundle.js"></script>
+<script src="/js/bundle.js"></script> -->
+
+<script type="text/babel">
+	var Menu = React.createClass({
+		handleClick: function (e) {
+			e.preventDefault();
+			this.props.onSelect(this.props.link);
+		},
+		render: function () {
+			return (<li className={this.props.active}><a href={this.props.link} onClick={this.handleClick}>{this.props.children}</a></li>)
+		}
+	});
+
+	var Menus = React.createClass({
+		getInitialState: function () {
+			return {link: '/'}
+		},
+		handleClick: function (link) {
+			this.setState({link: link});
+		},
+		render: function () {
+			var that = this;
+			var menus = this.props.items.map (function (item) {
+				return (<Menu link={item.link} active={that.state.link==item.link} onSelect={that.handleClick}>{item.text}</Menu>)
+			});
+
+			return (<ul>{menus}</ul>);
+		}
+	});
+
+	ReactDOM.render(<Menus items={[{text: '首页', link:'/'}, {text: '博客', link: '/blogs'}, {text: '归档', link: 'doc'}]}></Menus>, document.getElementById('menus'));
+</script>
+
+</body>
+</html>
